@@ -1,0 +1,14 @@
+#server:
+#  port: 8081
+#spring:
+#  application:
+#    name: xy-provider
+#  cloud:
+#    nacos:
+#      discovery:
+#        register-enabled: true
+#        server-addr: 127.0.0.1:8848
+#
+#xy:
+#  test:
+#    name : xy-myself

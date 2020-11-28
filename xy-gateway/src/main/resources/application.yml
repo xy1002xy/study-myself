@@ -1,0 +1,31 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /xy-gateway
+spring:
+  application:
+    name: xy-gateway
+  cloud:
+    nacos:
+      discovery:
+        register-enabled: true
+        server-addr: 127.0.0.1:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true # gateway可以发现nacos中的微服务
+      routes:
+        - id: xy-provider
+          uri:  lb://xy-provider
+          predicates:
+            - Path=/xy-gateway/provider/**
+#            - After= 2020-11-28T23:32:42.647+08:00[Asia/Shanghai]
+          filters:
+            - StripPrefix=1
+
+        - id: xy-user
+          uri:  lb://xy-user
+          predicates:
+            - Path=/xy-gateway/user/**
+          filters:
+            - StripPrefix=1
