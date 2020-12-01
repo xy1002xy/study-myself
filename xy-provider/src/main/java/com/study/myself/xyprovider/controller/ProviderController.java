@@ -1,5 +1,7 @@
 package com.study.myself.xyprovider.controller;
 
+import com.study.myself.xycommon.enums.ErrorCodeEnum;
+import com.study.myself.xycommon.exception.XyException;
 import com.study.myself.xyprovider.controller.service.IProviderService;
 import com.study.myself.xyprovider.model.IdRequest;
 import com.study.myself.xyprovider.model.Student;
@@ -14,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.StringJoiner;
 
 /**
  * @program: xy-parent
@@ -43,6 +43,6 @@ public class ProviderController {
     @PostMapping("/getById")
     @ApiOperation(value = "获取学生信息", notes = "获取学生信息")
     public Student getStudent(@RequestBody IdRequest idRequest) {
-        return null;
+        throw new XyException(ErrorCodeEnum.FAILURE);
     }
 }

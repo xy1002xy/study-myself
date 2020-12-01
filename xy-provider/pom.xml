@@ -14,6 +14,13 @@
     </properties>
 
     <dependencies>
+
+
+        <dependency>
+            <groupId>com.study.myself</groupId>
+            <artifactId>xy-common</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
