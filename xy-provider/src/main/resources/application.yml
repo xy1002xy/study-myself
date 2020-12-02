@@ -8,9 +8,12 @@ spring:
       discovery:
         register-enabled: true
         server-addr: 127.0.0.1:8848
-
 xy:
   test:
     name : xy-myself
   ip:
     list: 192.168.4.38,192.168.4.37
+
+#springfox:
+#  documentation:
+#    enabled: true

@@ -1,4 +1,4 @@
-package com.study.myself.xycommon.handler;
+package com.study.myself.xycore.advice;
 
 
 
@@ -24,7 +24,7 @@ import javax.servlet.ServletRequest;
 import java.nio.charset.Charset;
 
 /**
- * @program: xy-parent
+ * @program: xy-core
  * @description: 公共的异常封装
  * @author: wxy
  * @create: 2020-12-01 16:12
@@ -64,16 +64,15 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseBody
-    public ResultModel<Boolean> HttpMessageNotReadableExceptionHandler(Exception e) {
+    public ResultModel<Boolean> httpMessageNotReadableExceptionHandler(Exception e) {
         logger.error("参数校验错误！", e);
         return ResultModel.valueOf(ErrorCodeEnum.PARAM_ERROR);
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseBody
-    public ResultModel<Boolean> NoHandlerFoundExceptionHandler(NoHandlerFoundException e) {
+    public ResultModel<Boolean> noHandlerFoundExceptionHandler(NoHandlerFoundException e) {
         logger.error("url错误！", e);
-
         return ResultModel.valueOf(ErrorCodeEnum.NO_HANDLER_FOUND);
     }
 

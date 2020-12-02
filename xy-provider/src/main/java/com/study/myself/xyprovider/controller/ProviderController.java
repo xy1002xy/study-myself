@@ -43,6 +43,8 @@ public class ProviderController {
     @PostMapping("/getById")
     @ApiOperation(value = "获取学生信息", notes = "获取学生信息")
     public Student getStudent(@RequestBody IdRequest idRequest) {
-        throw new XyException(ErrorCodeEnum.FAILURE);
+        Student student = new Student();
+        student.setId(10L).setName("小明").setSex(1);
+        return student;
     }
 }

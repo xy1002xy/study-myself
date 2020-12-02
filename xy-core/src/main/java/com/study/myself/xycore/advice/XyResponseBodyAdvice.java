@@ -1,6 +1,7 @@
-package com.study.myself.xycommon.handler;
+package com.study.myself.xycore.advice;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.study.myself.xycommon.common.ResultModel;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -43,19 +44,25 @@ public class XyResponseBodyAdvice implements ResponseBodyAdvice<Object> {
         }
 
         if (body == null) {
-            return ResultModel.succ(body);
+            return ResultModel.succ();
         }
 
         if (body instanceof ResultModel) {
             return body;
         } else {
             //对于返回的对象如果不是最终对象ResponseResult，则选包装一下
-            ResultModel resultModel = ResultModel.succ(body);
+            ResultModel<Object> resultModel = ResultModel.succ(body);
             //因为handler处理类的返回类型是String，为了保证一致性，这里需要将ResponseResult转回去
             if (body instanceof String) {
                 return JSON.toJSONString(resultModel);
             }
             return resultModel;
         }
+    }
+
+    public static void main(String[] args) {
+        String name = "矩阵号";
+        System.out.println(ResultModel.succ(name));
+        System.out.println(JSONObject.toJSON(ResultModel.succ(name)));
     }
 }
