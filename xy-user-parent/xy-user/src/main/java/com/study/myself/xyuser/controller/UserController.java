@@ -40,7 +40,9 @@ public class UserController {
 
     @PostMapping("/getUser")
     @ApiOperation(value = "获取用户信息", notes = "获取用户信息")
-    public User getStudent(@RequestBody IdRequest idRequest) {
-        return null;
+    public User getUser(@RequestBody IdRequest idRequest) {
+        User user = new User();
+        user.setId(idRequest.getId()).setName("用户1").setSex(1);
+        return user;
     }
 }

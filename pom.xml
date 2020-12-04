@@ -14,8 +14,8 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <modules>
-        <module>xy-user</module>
-        <module>xy-provider</module>
+        <module>xy-user-parent</module>
+        <module>xy-provider-parent</module>
         <module>xy-gateway</module>
         <module>xy-common</module>
         <module>xy-core</module>
@@ -27,7 +27,7 @@
         <swagger.bootstrap.ui>1.9.6</swagger.bootstrap.ui>
         <spring.cloud.alibaba.version>2.2.2.RELEASE</spring.cloud.alibaba.version>
         <sringboot.version>2.3.0.RELEASE</sringboot.version>
-        <gateway.version>2.2.2.RELEASE</gateway.version>
+        <spring.cloud.version>2.2.2.RELEASE</spring.cloud.version>
         <xy.common.version>1.0.0-SNAPSHOT</xy.common.version>
         <xy.core.version>1.0.0-SNAPSHOT</xy.core.version>
     </properties>
@@ -88,8 +88,16 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-gateway</artifactId>
-                <version>${gateway.version}</version>
+                <version>${spring.cloud.version}</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${spring.cloud.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>

@@ -4,20 +4,19 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.study.myself</groupId>
-        <artifactId>xy-parent</artifactId>
+        <artifactId>xy-provider-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>xy-user</artifactId>
+    <artifactId>xy-provider</artifactId>
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>com.study.myself</groupId>
-            <artifactId>xy-common</artifactId>
+            <artifactId>xy-core</artifactId>
         </dependency>
 
         <dependency>
@@ -25,6 +24,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -43,7 +43,6 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -52,9 +51,10 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.study.myself.xyuser.XyUserApplication</mainClass>
+                    <mainClass>com.study.myself.xyprovider.XyProviderApplication</mainClass>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 
