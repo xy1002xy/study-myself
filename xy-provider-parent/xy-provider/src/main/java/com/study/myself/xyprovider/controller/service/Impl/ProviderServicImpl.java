@@ -2,6 +2,7 @@ package com.study.myself.xyprovider.controller.service.Impl;
 
 import com.study.myself.xyprovider.controller.service.IProviderService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 import java.util.StringJoiner;
@@ -13,7 +14,7 @@ import java.util.StringJoiner;
  * @create: 2020-11-28 20:49
  **/
 @Service
-//@RefreshScope
+@RefreshScope
 public class ProviderServicImpl implements IProviderService {
 
     @Value("${xy.test.name}")

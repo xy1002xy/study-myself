@@ -1,20 +1,18 @@
-package com.study.myself.xyuser.model;
+package com.study.myself.xyprovider.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-
 /**
- * @program: study-demo
- * @description: 用户实体
+ * @program: xy-parent
+ * @description: 用户信息
  * @author: wxy
- * @create: 2020-11-20 17:21
+ * @create: 2020-12-04 16:44
  **/
 @Data
 @Accessors(chain = true)
-public class User implements Serializable {
+public class UserInfo {
 
     @ApiModelProperty("主键")
     private Long id;

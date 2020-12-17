@@ -2,34 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <parent>
         <groupId>com.study.myself</groupId>
-        <artifactId>xy-parent</artifactId>
+        <artifactId>xy-user-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>xy-user-parent</artifactId>
-
-    <modules>
-        <module>xy-user</module>
-        <module>xy-user-api</module>
-    </modules>
+    <artifactId>xy-user-api</artifactId>
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
-
-        <dependency>
-            <groupId>com.study.myself</groupId>
-            <artifactId>xy-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
 
     </dependencies>
 

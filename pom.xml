@@ -30,6 +30,8 @@
         <spring.cloud.version>2.2.2.RELEASE</spring.cloud.version>
         <xy.common.version>1.0.0-SNAPSHOT</xy.common.version>
         <xy.core.version>1.0.0-SNAPSHOT</xy.core.version>
+        <project.common.version>1.0.0-SNAPSHOT</project.common.version>
+        <guava.version>29.0-jre</guava.version>
     </properties>
     <dependencyManagement>
 
@@ -43,6 +45,17 @@
                 <groupId>com.study.myself</groupId>
                 <artifactId>xy-core</artifactId>
                 <version>${xy.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.study.myself</groupId>
+                <artifactId>xy-user-api</artifactId>
+                <version>${project.common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.study.myself</groupId>
+                <artifactId>xy-provider-api</artifactId>
+                <version>${project.common.version}</version>
             </dependency>
 
             <dependency>
@@ -63,14 +76,6 @@
                 <artifactId>swagger-bootstrap-ui</artifactId>
                 <version>${swagger.bootstrap.ui}</version>
             </dependency>
-
-<!--            <dependency>-->
-<!--                <groupId>io.springfox</groupId>-->
-<!--                <artifactId>springfox-swagger-ui</artifactId>-->
-<!--                <version>${springfox.swagger2.version}</version>-->
-<!--            </dependency>-->
-            <!--swagger 结束-->
-
 
             <!-- nacos 开始-->
             <dependency>
@@ -97,7 +102,6 @@
                 <artifactId>spring-cloud-starter-openfeign</artifactId>
                 <version>${spring.cloud.version}</version>
             </dependency>
-
 
         </dependencies>
     </dependencyManagement>
@@ -134,13 +138,20 @@
         </dependency>
         <!-- 实现对 Swagger 的自动配置 -->
         <!-- https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter -->
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-boot-starter</artifactId>-->
-<!--            <version>3.0.0</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.springfox</groupId>-->
+        <!--            <artifactId>springfox-boot-starter</artifactId>-->
+        <!--            <version>3.0.0</version>-->
+        <!--        </dependency>-->
+
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
 
     </dependencies>
-
 
 </project>

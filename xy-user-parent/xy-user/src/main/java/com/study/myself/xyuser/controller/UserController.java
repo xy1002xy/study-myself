@@ -1,11 +1,14 @@
 package com.study.myself.xyuser.controller;
 
-import com.study.myself.xyuser.model.IdRequest;
-import com.study.myself.xyuser.model.User;
+import com.study.myself.xycommon.model.IdRequest;
+import com.study.myself.xyuserapi.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +28,9 @@ import java.util.StringJoiner;
 @RequestMapping("/user")
 @Api(tags = "用户管理")
 @RefreshScope
+@Slf4j
+@EnableFeignClients
+@EnableDiscoveryClient
 public class UserController {
 
     @Value("${server.port}")
@@ -40,8 +46,8 @@ public class UserController {
 
     @PostMapping("/getUser")
     @ApiOperation(value = "获取用户信息", notes = "获取用户信息")
-    public User getUser(@RequestBody IdRequest idRequest) {
-        User user = new User();
+    public UserVo getUser(@RequestBody IdRequest idRequest) {
+        UserVo user = new UserVo();
         user.setId(idRequest.getId()).setName("用户1").setSex(1);
         return user;
     }

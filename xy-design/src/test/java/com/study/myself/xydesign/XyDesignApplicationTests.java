@@ -1,9 +1,10 @@
-package com.study.myself.xyuser;
+package com.study.myself.xydesign;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class XyUserApplicationTests {
+class XyDesignApplicationTests {
 
     @Test
     void contextLoads() {
