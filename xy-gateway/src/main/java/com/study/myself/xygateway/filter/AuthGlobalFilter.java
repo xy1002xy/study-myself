@@ -25,12 +25,12 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         log.info("全局过滤器校验开始.......");
         ServerHttpRequest request = exchange.getRequest();
         // String userName = request.getQueryParams().getFirst("username");
-        String userName = request.getHeaders().getFirst("username");
-        if (StringUtils.isEmpty(userName)){
-            log.error("非法用户闯入");
-            exchange.getResponse().setStatusCode(HttpStatus.NOT_ACCEPTABLE);
-            return exchange.getResponse().setComplete();
-        }
+        // String userName = request.getHeaders().getFirst("username");
+        // if (StringUtils.isEmpty(userName)){
+        //     log.error("非法用户闯入");
+        //     exchange.getResponse().setStatusCode(HttpStatus.NOT_ACCEPTABLE);
+        //     return exchange.getResponse().setComplete();
+        // }
         log.info("全局过滤器校验结束.......");
         return chain.filter(exchange);
     }

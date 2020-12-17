@@ -1,6 +1,7 @@
 package com.study.myself.xyprovider.aop;
 
 import com.alibaba.fastjson.JSON;
+import com.study.myself.xycommon.exception.XyException;
 import com.study.myself.xycommon.utils.IpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -43,7 +44,7 @@ public class GlobalHandlerAspect {
             String IP = IpUtil.getIpAddress(attributes.getRequest());
             if (!ipList.contains(IP)) {
                 log.info("访问的ip{},现在ip白名单{}", IP, JSON.toJSONString(ipList));
-                throw new IllegalArgumentException("该ip不是允许的ip");
+                throw new XyException("该ip不是允许的ip");
             }
             System.out.println(IP);
         }
