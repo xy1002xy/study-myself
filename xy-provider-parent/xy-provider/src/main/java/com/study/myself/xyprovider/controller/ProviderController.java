@@ -1,5 +1,14 @@
 package com.study.myself.xyprovider.controller;
 
+import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
+import com.alibaba.cloud.nacos.registry.NacosRegistration;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.nacos.api.NacosFactory;
+import com.alibaba.nacos.api.exception.NacosException;
+import com.alibaba.nacos.api.naming.NamingService;
+import com.alibaba.nacos.api.naming.pojo.Instance;
+import com.alibaba.nacos.client.naming.NacosNamingService;
 import com.study.myself.xycommon.common.ResultModel;
 import com.study.myself.xycommon.model.IdRequest;
 import com.study.myself.xycommon.utils.DozerUtils;
@@ -21,6 +30,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Properties;
+
 /**
  * @program: xy-parent
  * @description: 服务提供者
@@ -30,7 +43,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/provider")
 @Api(tags = "学生管理")
-@RefreshScope
+//@RefreshScope
 @Slf4j
 public class ProviderController {
     @Value("${server.port}")
@@ -41,6 +54,18 @@ public class ProviderController {
 
     @Autowired
     private IUserApiService userApiService;
+
+    @Autowired
+    NacosDiscoveryProperties nacosDiscoveryProperties;
+
+    @Value("${spring.cloud.nacos.discovery.server-addr}")
+    private String serviceAddr;
+
+   // @Value("${spring.cloud.nacos.discovery.service:${spring.application.name:}}")
+   @Value("${spring.application.name}")
+    private String service;
+
+
 
     @GetMapping("/getPort/{id}")
     @ApiOperation(value = "测试获取的端口", notes = "测试获取的端口")
@@ -60,7 +85,38 @@ public class ProviderController {
     @ApiOperation(value = "获取用户信息", notes = "获取用户信息")
     public UserInfo getUserInfo(@RequestBody IdRequest idRequest) {
         ResultModel<UserVo> userVoResultModel = userApiService.getUser(idRequest);
-        log.info("获取的用户信息{}",userVoResultModel);
-        return DozerUtils.mapper(userVoResultModel.getData(),UserInfo.class);
+        log.info("获取的用户信息{}", userVoResultModel);
+        return DozerUtils.mapper(userVoResultModel.getData(), UserInfo.class);
+    }
+
+
+
+    @GetMapping("/api/nacos/deregister")
+    @ApiOperation(value = "deregister", notes = "deregister")
+    public String deregisterInstance() throws NacosException {
+        Properties properties = new Properties();
+        properties.setProperty("serverAddr", serviceAddr);
+        properties.setProperty("namespace", "public");
+        log.info("properties=--------<{}",properties);
+        NamingService namingService = NacosFactory.createNamingService(properties);
+        String groupName = nacosDiscoveryProperties.getGroup();
+        String clusterName = nacosDiscoveryProperties.getClusterName();
+        String serviceName = service;
+        String ip = "192.168.1.8";
+       // String ip = "127.0.0.1";
+        try {
+            // 同一个服务注册两个实例
+            log.info("service---<{},,ip---<{}",service,ip);
+            namingService.registerInstance(service,ip, 8088);
+            namingService.registerInstance(service, ip, 8089);
+            // 获取服务名为serverProvider_1的实例信息
+            List<Instance> serverProvider = namingService.getAllInstances(service);
+            log.info("deregisterInstance--->开始{}", serverProvider);
+            namingService.deregisterInstance(serviceName, groupName, ip, 8081, clusterName);
+            log.info("deregisterInstance--->下线结束{}", serverProvider);
+        } catch (NacosException e) {
+            log.error("deregister from nacos error", e);
+            return "error";
+        } return "success";
     }
 }

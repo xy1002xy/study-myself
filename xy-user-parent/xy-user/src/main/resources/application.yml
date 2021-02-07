@@ -1,10 +1,20 @@
-#server:
-#  port: 8082
-#spring:
-#  application:
-#    name: xy-user
-#  cloud:
-#    nacos:
-#      discovery:
-#        register-enabled: true
-#        server-addr: 127.0.0.1:8848
+server:
+  port: 8082
+spring:
+  application:
+    name: xy-user
+  cloud:
+    nacos:
+      discovery:
+        register-enabled: true
+        server-addr: 127.0.0.1:8848
+#        heart-beat-interval: 1 #心跳间隔。时间单位:秒。心跳间隔
+#        heart-beat-timeout: 3 #心跳暂停。时间单位:秒。 即服务端6秒收不到客户端心跳，会将该客户端注册的实例设为不健康：
+#        ip-delete-timeout: 3 #Ip删除超时。时间单位:秒。即服务端9秒收不到客户端心跳，会将该客户端注册的实例删除：
+
+#management:
+#  endpoint:
+#    web:
+#      exposure:
+#        include: *
+

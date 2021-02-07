@@ -3,6 +3,8 @@ package com.study.myself.xycommon.exception;
 import com.study.myself.xycommon.enums.ErrorCodeEnum;
 import com.study.myself.xycommon.enums.IErrorCode;
 import lombok.Getter;
+import org.slf4j.helpers.FormattingTuple;
+import org.slf4j.helpers.MessageFormatter;
 
 /**
  * @program: xy-parent
@@ -24,7 +26,15 @@ public class XyException extends RuntimeException {
 
     public XyException(String message, Integer errorCode) {
         super(message);
+
         this.errorCode = errorCode;
+    }
+
+    public XyException(IErrorCode errorCode, String msg) {
+        super(errorCode.getMessage());
+        this.errorCode = errorCode.getCode();
+        FormattingTuple ft = MessageFormatter.format(errorCode.getMessage(), msg);
+        this.msg = ft.getMessage();
     }
 
     public XyException(String msg) {

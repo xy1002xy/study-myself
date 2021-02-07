@@ -8,6 +8,13 @@ spring:
       discovery:
         register-enabled: true
         server-addr: 127.0.0.1:8848
+
+#    feign:
+#      name: MFRAMEWORK-PROVIDER
+#      provider: feignprovider
+#      ##开启Hystrix断路器
+#      hystrix:
+#        enabled: true
 xy:
   test:
     name : xy-myself

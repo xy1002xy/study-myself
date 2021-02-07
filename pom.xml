@@ -88,6 +88,12 @@
                 <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
                 <version>${spring.cloud.alibaba.version}</version>
             </dependency>
+
+<!--            <dependency>-->
+<!--                <groupId>com.alibaba.nacos</groupId>-->
+<!--                <artifactId>nacos-client</artifactId>-->
+<!--                <version>1.4.1</version>-->
+<!--            </dependency>-->
             <!-- nacos 结束-->
 
             <dependency>
@@ -102,6 +108,11 @@
                 <artifactId>spring-cloud-starter-openfeign</artifactId>
                 <version>${spring.cloud.version}</version>
             </dependency>
+
+<!--            <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>-->
+<!--            </dependency>-->
 
         </dependencies>
     </dependencyManagement>

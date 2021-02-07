@@ -1,10 +1,15 @@
 package com.study.myself.xyuser.controller;
 
+import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
+import com.alibaba.cloud.nacos.registry.NacosRegistration;
+import com.alibaba.nacos.api.exception.NacosException;
+import com.alibaba.nacos.client.naming.NacosNamingService;
 import com.study.myself.xycommon.model.IdRequest;
 import com.study.myself.xyuserapi.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -27,7 +32,7 @@ import java.util.StringJoiner;
 @RestController
 @RequestMapping("/user")
 @Api(tags = "用户管理")
-@RefreshScope
+//@RefreshScope
 @Slf4j
 @EnableFeignClients
 @EnableDiscoveryClient
@@ -36,13 +41,22 @@ public class UserController {
     @Value("${server.port}")
     private String port;
 
-    @GetMapping("/getPort/{id}")
-    @ApiOperation(value = "测试获取的端口", notes = "测试获取的端口")
-    public String getPort(@PathVariable(name = "id") Long id) {
-        StringJoiner stringJoiner = new StringJoiner(": ");
-        return stringJoiner.add("该服务的端口").add(port).add("输入的id").add(id.toString()).toString();
+    @Autowired
+    NacosDiscoveryProperties nacosDiscoveryProperties ;
 
-    }
+    @Autowired
+    NacosRegistration nacosRegistration;
+
+    @Autowired
+    NacosNamingService nacosNamingService ;
+
+    // @GetMapping("/getPort/{id}")
+    // @ApiOperation(value = "测试获取的端口", notes = "测试获取的端口")
+    // public String getPort(@PathVariable(name = "id") Long id) {
+    //     StringJoiner stringJoiner = new StringJoiner(": ");
+    //     return stringJoiner.add("该服务的端口").add(port).add("输入的id").add(id.toString()).toString();
+    //
+    // }
 
     @PostMapping("/getUser")
     @ApiOperation(value = "获取用户信息", notes = "获取用户信息")
@@ -50,5 +64,36 @@ public class UserController {
         UserVo user = new UserVo();
         user.setId(idRequest.getId()).setName("用户1").setSex(1);
         return user;
+    }
+
+
+    @PostMapping("/getUserEx")
+    @ApiOperation(value = "获取用户信息-ex", notes = "获取用户信息")
+    public UserVo getUserEx(@RequestBody IdRequest idRequest) {
+        UserVo user = new UserVo();
+        user.setId(idRequest.getId()).setName("用户1").setSex(1);
+        return user;
+    }
+
+    @GetMapping(  "/api/nacos/deregister")
+    @ApiOperation(value = "deregister", notes = "deregister")
+    public String deregisterInstance() {
+       // String serviceName = nacosDiscoveryProperties.getService();
+        // int port = nacosDiscoveryProperties.getPort();
+        // String ip = nacosDiscoveryProperties.getIp();
+        String groupName = nacosDiscoveryProperties.getGroup();
+        String clusterName = nacosDiscoveryProperties.getClusterName();
+        String serviceName = "xy-user";
+        String ip = "192.168.4.38";
+        int port = 8082;
+        log.info("deregister from nacos, serviceName:{}, groupName:{}, clusterName:{}, ip:{}, port:{}", serviceName, groupName, clusterName, ip, port);
+        try {
+         //   nacosRegistration.getNacosNamingService().deregisterInstance(serviceName, groupName, ip, port, clusterName);
+            nacosNamingService.deregisterInstance(serviceName, groupName, ip, port, clusterName);
+        } catch (NacosException e) {
+            log.error("deregister from nacos error", e);
+            return "error";
+        }
+        return "success";
     }
 }
