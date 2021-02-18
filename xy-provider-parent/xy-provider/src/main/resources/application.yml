@@ -19,7 +19,7 @@ xy:
   test:
     name : xy-myself
   ip:
-    list: 192.168.4.38,192.168.4.37
+    list: 192.168.4.38,192.168.4.37,127.0.0.1
 
 #springfox:
 #  documentation:

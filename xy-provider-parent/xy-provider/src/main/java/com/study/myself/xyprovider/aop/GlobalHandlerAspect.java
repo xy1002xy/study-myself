@@ -39,15 +39,15 @@ public class GlobalHandlerAspect {
     @Around("checkIp()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         ServletRequestAttributes attributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-        if (attributes != null) {
-            // 校验ip是否是指定的ip
-            String IP = IpUtil.getIpAddress(attributes.getRequest());
-            if (!ipList.contains(IP)) {
-                log.info("访问的ip{},现在ip白名单{}", IP, JSON.toJSONString(ipList));
-                throw new XyException("该ip不是允许的ip");
-            }
-            System.out.println(IP);
-        }
+        // if (attributes != null) {
+        //     // 校验ip是否是指定的ip
+        //     String IP = IpUtil.getIpAddress(attributes.getRequest());
+        //     if (!ipList.contains(IP)) {
+        //         log.info("访问的ip{},现在ip白名单{}", IP, JSON.toJSONString(ipList));
+        //         throw new XyException("该ip不是允许的ip");
+        //     }
+        //     System.out.println(IP);
+        // }
         return joinPoint.proceed();
     }
 }
