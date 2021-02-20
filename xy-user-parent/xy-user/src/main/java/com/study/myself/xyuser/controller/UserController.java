@@ -5,6 +5,10 @@ import com.alibaba.cloud.nacos.registry.NacosRegistration;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.client.naming.NacosNamingService;
 import com.study.myself.xycommon.model.IdRequest;
+import com.study.myself.xycommon.utils.DozerUtils;
+import com.study.myself.xycore.annotation.AfterHandleParam;
+import com.study.myself.xycore.annotation.BeforeHandleParam;
+import com.study.myself.xyuserapi.outvo.UserOutVo;
 import com.study.myself.xyuserapi.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -57,14 +61,20 @@ public class UserController {
         return user;
     }
 
-
     @PostMapping("/getUserEx")
     @ApiOperation(value = "获取用户信息-ex", notes = "获取用户信息")
-    public UserVo getUserEx(@RequestBody IdRequest idRequest) {
-        UserVo user = new UserVo();
+    public UserOutVo getUserEx(@RequestBody IdRequest idRequest) {
+        UserOutVo user = new UserOutVo();
         user.setId(idRequest.getId()).setName("用户1").setSex(1);
         return user;
     }
 
+    @PostMapping("/handle")
+    @ApiOperation(value = "测试-动态修改用户出入参", notes = "测试-动态修改用户出入参")
+    @AfterHandleParam(values = {"mobile","name"})
+    @BeforeHandleParam(values = {"mobile"})
+    public UserOutVo handleUser(@RequestBody UserVo userVo) {
+        return DozerUtils.mapper(userVo, UserOutVo.class);
+    }
 
 }

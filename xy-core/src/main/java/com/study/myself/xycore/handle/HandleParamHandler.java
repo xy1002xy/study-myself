@@ -78,10 +78,8 @@ public class HandleParamHandler {
             PropertyDescriptor paramDescriptor = BeanUtils.getPropertyDescriptor(clazz, str);
             String value = (String)Objects.requireNonNull(paramDescriptor).getReadMethod().invoke(obj);
             value = value + "-----返回入参----" + UUID.randomUUID().toString().substring(0, 10);
-            PropertyDescriptor pd = new PropertyDescriptor(str, clazz);
             //获得写方法
-            Method wM = pd.getWriteMethod();
-            wM.invoke(obj, value);
+            paramDescriptor.getWriteMethod().invoke(obj, value);
         }
 
         // Field[] fields = clazz.getDeclaredFields();
@@ -97,7 +95,6 @@ public class HandleParamHandler {
         //     }
         // }
     }
-
 
 }
 
