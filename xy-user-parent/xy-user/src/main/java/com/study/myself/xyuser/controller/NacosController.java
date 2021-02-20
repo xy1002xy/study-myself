@@ -24,47 +24,48 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.StringJoiner;
 
 /**
- * @program: xy-parent
+ * @program: xy-user
  * @description: 服务提供者
  * @author: wxy
  * @create: 2020-11-28 20:08
  **/
 @RestController
-@RequestMapping("/user")
-@Api(tags = "用户管理")
+@RequestMapping("/nacos")
+@Api(tags = "Nacos管理")
 @RefreshScope
 @Slf4j
 @EnableFeignClients
 @EnableDiscoveryClient
-public class UserController {
+public class NacosController {
 
-    @Value("${server.port}")
-    private String port;
 
-    @GetMapping("/getPort/{id}")
-    @ApiOperation(value = "测试获取的端口", notes = "测试获取的端口")
-    public String getPort(@PathVariable(name = "id") Long id) {
-        StringJoiner stringJoiner = new StringJoiner(": ");
-        return stringJoiner.add("该服务的端口").add(port).add("输入的id").add(id.toString()).toString();
 
+    @Autowired
+    NacosDiscoveryProperties nacosDiscoveryProperties ;
+
+    @Autowired
+    NacosRegistration nacosRegistration;
+
+    @Autowired
+    NacosNamingService nacosNamingService ;
+
+
+
+    @GetMapping(  "/api/nacos/deregister")
+    @ApiOperation(value = "nacos下线", notes = "nacos下线")
+    public String deregisterInstance() {
+       String serviceName = nacosDiscoveryProperties.getService();
+        int port = nacosDiscoveryProperties.getPort();
+        String ip = nacosDiscoveryProperties.getIp();
+        String groupName = nacosDiscoveryProperties.getGroup();
+        String clusterName = nacosDiscoveryProperties.getClusterName();
+        log.info("deregister from nacos, serviceName:{}, groupName:{}, clusterName:{}, ip:{}, port:{}", serviceName, groupName, clusterName, ip, port);
+        try {
+            nacosNamingService.deregisterInstance(serviceName, groupName, ip, port, clusterName);
+        } catch (NacosException e) {
+            log.error("deregister from nacos error", e);
+            return "error";
+        }
+        return "success";
     }
-
-    @PostMapping("/getUser")
-    @ApiOperation(value = "获取用户信息", notes = "获取用户信息")
-    public UserVo getUser(@RequestBody IdRequest idRequest) {
-        UserVo user = new UserVo();
-        user.setId(idRequest.getId()).setName("用户1").setSex(1);
-        return user;
-    }
-
-
-    @PostMapping("/getUserEx")
-    @ApiOperation(value = "获取用户信息-ex", notes = "获取用户信息")
-    public UserVo getUserEx(@RequestBody IdRequest idRequest) {
-        UserVo user = new UserVo();
-        user.setId(idRequest.getId()).setName("用户1").setSex(1);
-        return user;
-    }
-
-
 }
