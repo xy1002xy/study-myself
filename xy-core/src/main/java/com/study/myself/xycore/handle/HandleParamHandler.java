@@ -2,6 +2,7 @@ package com.study.myself.xycore.handle;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.study.myself.xycommon.enums.HandleRequestTypeEnum;
 import com.study.myself.xycore.annotation.AfterHandleParam;
 import com.study.myself.xycore.annotation.BeforeHandleParam;
 import lombok.extern.slf4j.Slf4j;
@@ -50,12 +51,19 @@ public class HandleParamHandler {
         // 转换保存参数对象为数据库对象
         Class<?> clazz = obj.getClass();
         String[] handles = checkName.values();
+        HandleRequestTypeEnum requestTypeEnum = checkName.requestType();
         // 将实体转换json对象
         JSONObject json = (JSONObject)JSON.toJSON(obj);
         for (String str : handles) {
             PropertyDescriptor paramDescriptor = BeanUtils.getPropertyDescriptor(clazz, str);
             String value = (String)Objects.requireNonNull(paramDescriptor).getReadMethod().invoke(obj);
-            value = value + "-----请求入参数--" + UUID.randomUUID().toString().substring(0, 10);
+            // 检查参数解析方式 HandleRequestTypeEnum
+            if (HandleRequestTypeEnum.DECRYPT_HANDLE_PARAM.getValue().equals(requestTypeEnum.getValue())){
+                value = value + "-----请求入参数--拦截入参，解密入参:" + UUID.randomUUID().toString().substring(0, 10);
+            }
+            if (HandleRequestTypeEnum.NEED_HANDLE_PARAM.getValue().equals(requestTypeEnum.getValue())){
+                value = value + "-----请求入参数--拦截入参，需要先校验入参:" + UUID.randomUUID().toString().substring(0, 10);
+            }
             // 修改json对象
             json.put(str, value);
         }

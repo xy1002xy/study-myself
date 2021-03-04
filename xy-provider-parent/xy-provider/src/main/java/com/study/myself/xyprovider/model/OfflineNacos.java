@@ -1,6 +1,5 @@
 package com.study.myself.xyprovider.model;
 
-import io.swagger.models.auth.In;
 import lombok.Data;
 
 /**

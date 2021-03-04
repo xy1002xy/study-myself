@@ -4,6 +4,7 @@ import com.study.myself.xycommon.common.ResultModel;
 import com.study.myself.xycommon.model.IdRequest;
 import com.study.myself.xyuserapi.vo.UserVo;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author: wxy
  * @create: 2020-12-04 16:31
  **/
-@FeignClient(value = "xy-user")
+@FeignClient(value = "xy-user",fallback = UserServiceApiFallbackFactory.class)
+@Component
 public interface IUserApiService {
 
     /**
@@ -24,4 +26,6 @@ public interface IUserApiService {
      */
     @PostMapping("/user/getUser")
     ResultModel<UserVo> getUser(@RequestBody IdRequest idRequest);
+
+
 }

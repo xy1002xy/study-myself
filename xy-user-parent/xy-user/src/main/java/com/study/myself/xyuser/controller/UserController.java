@@ -4,6 +4,7 @@ import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.registry.NacosRegistration;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.client.naming.NacosNamingService;
+import com.study.myself.xycommon.enums.HandleRequestTypeEnum;
 import com.study.myself.xycommon.model.IdRequest;
 import com.study.myself.xycommon.utils.DozerUtils;
 import com.study.myself.xycore.annotation.AfterHandleParam;
@@ -54,10 +55,10 @@ public class UserController {
     }
 
     @PostMapping("/getUser")
-    @ApiOperation(value = "获取用户信息", notes = "获取用户信息")
+    @ApiOperation(value = "获取用户信息-feign", notes = "获取用户信息-feign")
     public UserVo getUser(@RequestBody IdRequest idRequest) {
         UserVo user = new UserVo();
-        user.setId(idRequest.getId()).setName("用户1").setSex(1);
+        user.setId(idRequest.getId()).setName("用户1").setSex(1).setMobile("18221232312");
         return user;
     }
 
@@ -72,7 +73,7 @@ public class UserController {
     @PostMapping("/handle")
     @ApiOperation(value = "测试-动态修改用户出入参", notes = "测试-动态修改用户出入参")
     @AfterHandleParam(values = {"mobile","name"})
-    @BeforeHandleParam(values = {"mobile"})
+    @BeforeHandleParam(values = {"mobile"}, requestType = HandleRequestTypeEnum.NEED_HANDLE_PARAM)
     public UserOutVo handleUser(@RequestBody UserVo userVo) {
         return DozerUtils.mapper(userVo, UserOutVo.class);
     }

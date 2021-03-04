@@ -1,4 +1,4 @@
-package com.study.myself.xyprovider.controller.service;
+package com.study.myself.xyprovider.service;
 
 /**
  * @program: xy-parent

@@ -1,6 +1,6 @@
-package com.study.myself.xyprovider.controller.service.Impl;
+package com.study.myself.xyprovider.service.Impl;
 
-import com.study.myself.xyprovider.controller.service.IProviderService;
+import com.study.myself.xyprovider.service.IProviderService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;

@@ -1,9 +1,12 @@
 package com.study.myself.xycore.annotation;
 
+import com.study.myself.xycommon.enums.HandleRequestTypeEnum;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.Map;
 
 /**
  * @program: xy-core
@@ -16,6 +19,9 @@ import java.lang.annotation.Target;
 public @interface BeforeHandleParam {
 
     String[] values() default {"123","234"};
+
+    HandleRequestTypeEnum requestType();
+
 }
 
 
