@@ -3,6 +3,7 @@ package com.study.myself.xycore.handle;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.study.myself.xycommon.enums.HandleRequestTypeEnum;
+import com.study.myself.xycommon.model.JsonObj;
 import com.study.myself.xycore.annotation.AfterHandleParam;
 import com.study.myself.xycore.annotation.BeforeHandleParam;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -50,22 +51,32 @@ public class HandleParamHandler {
         BeforeHandleParam checkName = signature.getMethod().getAnnotation(BeforeHandleParam.class);
         // 转换保存参数对象为数据库对象
         Class<?> clazz = obj.getClass();
-        String[] handles = checkName.values();
-        HandleRequestTypeEnum requestTypeEnum = checkName.requestType();
+        // String[] handles = checkName.values();
+        // HandleRequestTypeEnum requestTypeEnum = checkName.requestType();
+        // 转换实体
+        List<JsonObj> jsonObjList = JSONObject.parseArray(checkName.json(), JsonObj.class);
         // 将实体转换json对象
         JSONObject json = (JSONObject)JSON.toJSON(obj);
-        for (String str : handles) {
-            PropertyDescriptor paramDescriptor = BeanUtils.getPropertyDescriptor(clazz, str);
+        for (JsonObj jsonObj : jsonObjList) {
+            String paramName = jsonObj.getParamName();
+            PropertyDescriptor paramDescriptor = BeanUtils.getPropertyDescriptor(clazz, paramName);
             String value = (String)Objects.requireNonNull(paramDescriptor).getReadMethod().invoke(obj);
             // 检查参数解析方式 HandleRequestTypeEnum
-            if (HandleRequestTypeEnum.DECRYPT_HANDLE_PARAM.getValue().equals(requestTypeEnum.getValue())){
-                value = value + "-----请求入参数--拦截入参，解密入参:" + UUID.randomUUID().toString().substring(0, 10);
+            if (HandleRequestTypeEnum.NEED_HANDLE_PARAM.getValue().equals(jsonObj.getHandleType())) {
+                value = value + "-----第一种请求方式-请求入参数--拦截入参，需要先校验入参:" + UUID.randomUUID().toString().substring(0, 10);
             }
-            if (HandleRequestTypeEnum.NEED_HANDLE_PARAM.getValue().equals(requestTypeEnum.getValue())){
-                value = value + "-----请求入参数--拦截入参，需要先校验入参:" + UUID.randomUUID().toString().substring(0, 10);
+            if (HandleRequestTypeEnum.DECRYPT_HANDLE_PARAM.getValue().equals(jsonObj.getHandleType())) {
+                value = value + "-----第二种请求方式-请求入参数--拦截入参，解密入参:" + UUID.randomUUID().toString().substring(0, 10);
+            }
+            if (HandleRequestTypeEnum.THIRD_HANDLE.getValue().equals(jsonObj.getHandleType())) {
+                value = value + "-----第三种请求方式-请求入参数--拦截入参:" + UUID.randomUUID().toString().substring(0, 10);
+            }
+            if (HandleRequestTypeEnum.FOUR_HANDLE.getValue().equals(jsonObj.getHandleType())) {
+                value = value + "-----第四种请求方式-请求入参数--拦截入参:" + UUID.randomUUID().toString().substring(0, 10);
             }
             // 修改json对象
-            json.put(str, value);
+            json.put(paramName, value);
+            log.info("jsonObj----{}", jsonObj);
         }
         // 把修改后的json对象转换为接收到参数的对象保存到数组中
         args[0] = JSON.toJavaObject(json, clazz);

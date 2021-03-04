@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringJoiner;
 
 /**
@@ -70,10 +72,21 @@ public class UserController {
         return user;
     }
 
+
+    @PostMapping("/getUserList")
+    @ApiOperation(value = "获取用户信息-列表", notes = "获取用户信息-列表")
+    public List<UserOutVo> listUser(@RequestBody IdRequest idRequest) {
+        List<UserOutVo> userOutVoList = new ArrayList<>();
+        UserOutVo user = new UserOutVo();
+        user.setId(idRequest.getId()).setName("用户1").setSex(1);
+        userOutVoList.add(user);
+        return userOutVoList;
+    }
+
     @PostMapping("/handle")
     @ApiOperation(value = "测试-动态修改用户出入参", notes = "测试-动态修改用户出入参")
     @AfterHandleParam(values = {"mobile","name"})
-    @BeforeHandleParam(values = {"mobile"}, requestType = HandleRequestTypeEnum.NEED_HANDLE_PARAM)
+    @BeforeHandleParam(json ="[{ \"paramName\":\"mobile\", \"handleType\":2},{ \"paramName\":\"name\", \"handleType\":3 }]")
     public UserOutVo handleUser(@RequestBody UserVo userVo) {
         return DozerUtils.mapper(userVo, UserOutVo.class);
     }

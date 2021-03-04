@@ -18,9 +18,12 @@ import java.util.Map;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BeforeHandleParam {
 
-    String[] values() default {"123","234"};
+    // String[] values() default {"123","234"};
+    //
+    // HandleRequestTypeEnum requestType();
 
-    HandleRequestTypeEnum requestType();
+    String json() default "[\n" + "    {\n" + "        \"paramName\":\"mobile\",\n" + "        \"handleType\":2\n"
+        + "    }\n" + "]";
 
 }
 
