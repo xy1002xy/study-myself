@@ -85,7 +85,7 @@ public class UserController {
 
     @PostMapping("/handle")
     @ApiOperation(value = "测试-动态修改用户出入参", notes = "测试-动态修改用户出入参")
-    @AfterHandleParam(values = {"mobile","name"})
+    @AfterHandleParam(json ="[{ \"paramName\":\"name\", \"handleType\":5 }]")
     @BeforeHandleParam(json ="[{ \"paramName\":\"mobile\", \"handleType\":2},{ \"paramName\":\"name\", \"handleType\":3 }]")
     public UserOutVo handleUser(@RequestBody UserVo userVo) {
         return DozerUtils.mapper(userVo, UserOutVo.class);

@@ -15,6 +15,7 @@ public enum HandleRequestTypeEnum {
     DECRYPT_HANDLE_PARAM(2, "拦截入参，解密入参"),
     THIRD_HANDLE(3,"第三种处理方式"),
     FOUR_HANDLE(4,"第三种处理方式"),
+    FIVE_HANDLE(5,"第三种处理方式"),
 
     ;
 

@@ -22,8 +22,7 @@ public @interface BeforeHandleParam {
     //
     // HandleRequestTypeEnum requestType();
 
-    String json() default "[\n" + "    {\n" + "        \"paramName\":\"mobile\",\n" + "        \"handleType\":2\n"
-        + "    }\n" + "]";
+    String json() default "[{ \"paramName\":\"mobile\", \"handleType\":2},{ \"paramName\":\"name\", \"handleType\":3 }]";
 
 }
 

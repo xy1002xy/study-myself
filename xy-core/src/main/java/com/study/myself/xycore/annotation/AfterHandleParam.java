@@ -14,5 +14,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AfterHandleParam {
-    String[] values() default {"123","234"};
+    // String[] values() default {"123","234"};
+     String json() default "[{ \"paramName\":\"mobile\", \"handleType\":2},{ \"paramName\":\"name\", \"handleType\":3 }]";
 }
