@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 public class UserServiceApiFallbackFactory implements IUserApiService{
     @Override
     public ResultModel<UserVo> getUser(IdRequest idRequest) {
-        return new ResultModel<>();
+       // return new ResultModel<>();
+        return ResultModel.error(1001, "服务已经停止");
     }
 }
