@@ -18,11 +18,10 @@ import java.util.Map;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BeforeHandleParam {
 
-    // String[] values() default {"123","234"};
-    //
+     String[] values() default {"mobile,2","name,3"};
     // HandleRequestTypeEnum requestType();
 
-    String json() default "[{ \"paramName\":\"mobile\", \"handleType\":2},{ \"paramName\":\"name\", \"handleType\":3 }]";
+    //String json() default "[{ \"paramName\":\"mobile\", \"handleType\":2},{ \"paramName\":\"name\", \"handleType\":3 }]";
 
 }
 

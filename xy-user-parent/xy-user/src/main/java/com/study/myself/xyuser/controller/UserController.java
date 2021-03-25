@@ -72,7 +72,6 @@ public class UserController {
         return user;
     }
 
-
     @PostMapping("/getUserList")
     @ApiOperation(value = "获取用户信息-列表", notes = "获取用户信息-列表")
     public List<UserOutVo> listUser(@RequestBody IdRequest idRequest) {
@@ -85,10 +84,24 @@ public class UserController {
 
     @PostMapping("/handle")
     @ApiOperation(value = "测试-动态修改用户出入参", notes = "测试-动态修改用户出入参")
-    @AfterHandleParam(json ="[{ \"paramName\":\"name\", \"handleType\":5 }]")
-    @BeforeHandleParam(json ="[{ \"paramName\":\"mobile\", \"handleType\":2},{ \"paramName\":\"name\", \"handleType\":3 }]")
+    @AfterHandleParam(json = "[{ \"paramName\":\"name\", \"handleType\":5 }]")
+    @BeforeHandleParam(values = {"mobile,2", "name,3"})
     public UserOutVo handleUser(@RequestBody UserVo userVo) {
         return DozerUtils.mapper(userVo, UserOutVo.class);
     }
 
+    @PostMapping("/handleUserList")
+    @ApiOperation(value = "测试-动态修改用户列表出入参", notes = "测试-动态修改用户列表出入参")
+    @AfterHandleParam(json = "[{ \"paramName\":\"mobile\", \"handleType\":5 }]")
+   // @BeforeHandleParam(values = {"mobile,2", "name,3"})
+    public List<UserOutVo> handleUserList(@RequestBody UserVo userVo) {
+        List<UserOutVo> userOutVoList = new ArrayList<>();
+        UserOutVo userOutVo = new UserOutVo();
+        userOutVo.setId(userVo.getId() + 1).setName(userVo.getName() + "名字1").setMobile(userVo.getMobile() + "手机号1");
+        userOutVoList.add(userOutVo);
+        UserOutVo userOutVo1 = new UserOutVo();
+        userOutVo1.setId(userVo.getId() + 2).setName(userVo.getName() + "名字2").setMobile(userVo.getMobile() + "手机号2");
+        userOutVoList.add(userOutVo1);
+        return userOutVoList;
+    }
 }

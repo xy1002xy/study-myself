@@ -16,8 +16,11 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.beans.PropertyDescriptor;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -51,21 +54,26 @@ public class HandleParamHandler {
         BeforeHandleParam checkName = signature.getMethod().getAnnotation(BeforeHandleParam.class);
         // 转换保存参数对象为数据库对象
         Class<?> clazz = obj.getClass();
-        // String[] handles = checkName.values();
+        String[] handles = checkName.values();
         // HandleRequestTypeEnum requestTypeEnum = checkName.requestType();
         // 转换实体
-        List<JsonObj> jsonObjList = JSONObject.parseArray(checkName.json(), JsonObj.class);
+        //List<JsonObj> jsonObjList = JSONObject.parseArray(checkName.json(), JsonObj.class);
         // 将实体转换json对象
         JSONObject json = (JSONObject)JSON.toJSON(obj);
-        for (JsonObj jsonObj : jsonObjList) {
-            String paramName = jsonObj.getParamName();
+        for (String handle : handles) {
+            List<String> list = Arrays.asList(handle.split(","));
+            if (CollectionUtils.isEmpty(list)) {
+                return point.proceed(args);
+            }
+            String paramName = list.get(0);
+            Integer handleType = Integer.parseInt(list.get(1));
             PropertyDescriptor paramDescriptor = BeanUtils.getPropertyDescriptor(clazz, paramName);
             String value = (String)Objects.requireNonNull(paramDescriptor).getReadMethod().invoke(obj);
             // 检查参数解析方式 HandleRequestTypeEnum
-            value = commonCheckHandleParam(value, jsonObj.getHandleType());
+            value = commonCheckHandleParam(value, handleType);
             // 修改json对象
             json.put(paramName, value);
-            log.info("jsonObj----{}", jsonObj);
+            log.info("list----{}", list);
         }
         // 把修改后的json对象转换为接收到参数的对象保存到数组中
         args[0] = JSON.toJavaObject(json, clazz);
@@ -108,14 +116,28 @@ public class HandleParamHandler {
         Class<?> clazz = obj.getClass();
         // 转换实体
         List<JsonObj> jsonObjList = JSONObject.parseArray(afterHandleName.json(), JsonObj.class);
-        // 将实体转换json对象
-        for (JsonObj jsonObj : jsonObjList) {
-            PropertyDescriptor paramDescriptor = BeanUtils.getPropertyDescriptor(clazz, jsonObj.getParamName());
-            String value = (String)Objects.requireNonNull(paramDescriptor).getReadMethod().invoke(obj);
-            value = commonCheckHandleParam(value, jsonObj.getHandleType());
-            //获得写方法
-            paramDescriptor.getWriteMethod().invoke(obj, value);
+        if (obj instanceof ArrayList){
+            for (int i = 0; i < ((ArrayList)obj).size(); i++) {
+                for (JsonObj jsonObj : jsonObjList) {
+                    PropertyDescriptor paramDescriptor = BeanUtils.getPropertyDescriptor(((ArrayList<?>)obj).get(i).getClass(), jsonObj.getParamName());
+                    String value = (String)Objects.requireNonNull(paramDescriptor).getReadMethod().invoke(((ArrayList<?>)obj).get(i));
+                    value = commonCheckHandleParam(value, jsonObj.getHandleType());
+                    //获得写方法
+                    paramDescriptor.getWriteMethod().invoke(((ArrayList<?>)obj).get(i), value);
+                }
+            }
+        }else {
+            // 将实体转换json对象
+            for (JsonObj jsonObj : jsonObjList) {
+                PropertyDescriptor paramDescriptor = BeanUtils.getPropertyDescriptor(clazz, jsonObj.getParamName());
+                String value = (String)Objects.requireNonNull(paramDescriptor).getReadMethod().invoke(obj);
+                value = commonCheckHandleParam(value, jsonObj.getHandleType());
+                //获得写方法
+                paramDescriptor.getWriteMethod().invoke(obj, value);
+            }
         }
+
+
 
         // Field[] fields = clazz.getDeclaredFields();
         // //写数据

@@ -32,6 +32,7 @@
         <xy.core.version>1.0.0-SNAPSHOT</xy.core.version>
         <project.common.version>1.0.0-SNAPSHOT</project.common.version>
         <guava.version>29.0-jre</guava.version>
+        <aspectjweaver.version>1.8.9</aspectjweaver.version>
     </properties>
     <dependencyManagement>
 
@@ -173,6 +174,23 @@
             <version>${guava.version}</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
+            <version>1.49</version>
+        </dependency>
 
     </dependencies>
 
