@@ -2,18 +2,15 @@ package com.study.myself.xycommon.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.util.ObjectUtils;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static javax.xml.crypto.dsig.SignatureMethod.HMAC_SHA256;
 
 /**
  * @program: xy-parent
@@ -47,7 +44,7 @@ public class SignatureUtils {
 
     public static void main(String[] args) {
         String salt = "EE6Ox4hM2v&$r_$4M02QbK8@f02zv2Arp422K20@";
-        String requestId = "0b0b56be16165907104373675e3891";
+        String requestId = "123213123";
         calculateDigest(requestId, salt);
         try {
             String pwd = String.format("%s-%s", requestId, salt);
