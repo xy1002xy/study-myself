@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * @program: xy-parent
@@ -90,15 +91,17 @@ public class NacosController {
             // 获取服务名为 xy-provider 的实例信息
             List<Instance> serverProvider = nacosNamingService.getAllInstances(service);
             log.info("deregisterInstance--->开始{}", serverProvider);
-            //  namingService.deregisterInstance(service, nacosDiscoveryProperties.getGroup(), ip, 8089, nacosDiscoveryProperties.getClusterName());
-            // nacosNamingService
-            //     .deregisterInstance(service, nacosDiscoveryProperties.getGroup(), nacosDiscoveryProperties.getIp(), 8081,
-            //         nacosDiscoveryProperties.getClusterName());
-            // Thread.sleep(1000);
+            //namingService.deregisterInstance(service, nacosDiscoveryProperties.getGroup(), ip, 8089, nacosDiscoveryProperties.getClusterName());
+            nacosNamingService
+                .deregisterInstance(service, nacosDiscoveryProperties.getGroup()+ "_Test", nacosDiscoveryProperties.getIp(), 8081,
+                    nacosDiscoveryProperties.getClusterName());
+             Thread.sleep(1000);
             log.info("deregisterInstance--->下线结束{}", serverProvider);
         } catch (NacosException e) {
             log.error("deregister from nacos error", e);
             return "error";
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         return "success";
     }

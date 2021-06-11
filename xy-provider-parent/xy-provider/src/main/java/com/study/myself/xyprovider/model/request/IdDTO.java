@@ -1,5 +1,6 @@
-package com.study.myself.xycommon.model;
+package com.study.myself.xyprovider.model.request;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -11,8 +12,9 @@ import javax.validation.constraints.NotNull;
  * @create: 2020-11-28 20:09
  **/
 @Data
-public class IdRequest {
+public class IdDTO {
 
     @NotNull(message = "id不可为空")
-    private Long id;
+    @ApiModelProperty(value = "产品id")
+    private Long productId;
 }

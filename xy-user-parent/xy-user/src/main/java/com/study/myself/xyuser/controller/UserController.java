@@ -93,6 +93,7 @@ public class UserController {
     @PostMapping("/handleUserList")
     @ApiOperation(value = "测试-动态修改用户列表出入参", notes = "测试-动态修改用户列表出入参")
     @AfterHandleParam(json = "[{ \"paramName\":\"mobile\", \"handleType\":5 }]")
+
    // @BeforeHandleParam(values = {"mobile,2", "name,3"})
     public List<UserOutVo> handleUserList(@RequestBody UserVo userVo) {
         List<UserOutVo> userOutVoList = new ArrayList<>();

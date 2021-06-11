@@ -58,7 +58,7 @@ public class HandleParamHandler {
         // HandleRequestTypeEnum requestTypeEnum = checkName.requestType();
         // 转换实体
         //List<JsonObj> jsonObjList = JSONObject.parseArray(checkName.json(), JsonObj.class);
-        // 将实体转换json对象
+        // 将实体转换json对
         JSONObject json = (JSONObject)JSON.toJSON(obj);
         for (String handle : handles) {
             List<String> list = Arrays.asList(handle.split(","));

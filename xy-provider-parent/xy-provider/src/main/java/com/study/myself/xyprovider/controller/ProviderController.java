@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 /**
  * @program: xy-parent
  * @description: 服务提供者
@@ -52,7 +54,7 @@ public class ProviderController {
 
     @PostMapping("/getById")
     @ApiOperation(value = "获取学生信息", notes = "获取学生信息")
-    public Student getStudent(@RequestBody IdRequest idRequest) {
+    public Student getStudent(@Valid @RequestBody IdRequest idRequest) {
         log.info("idRequest------->{}",idRequest);
         Student student = new Student();
         student.setId(10L).setName("小明").setSex(1);
