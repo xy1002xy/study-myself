@@ -34,20 +34,22 @@ public class DeployAppBO implements Serializable {
     @ApiModelProperty(value = "是否展示 1 展示 0 不展示")
     private Integer show;
 
-    @ApiModelProperty(value = "安装类型 0 没有该选项 1 新安装 2 选择已有的安装")
-    private Integer installType;
+    private Integer currentSelect;
 
-    @ApiModelProperty(value = "单选列表--主要为了配合新安装/选择已有的安装 展示使用 ")
+    @ApiModelProperty(value = "单选框选择的数据，主要针对新安装和已有安装")
     private List<String> singleList;
 
     @ApiModelProperty(value = "配置列表")
-    private List<DeployAppDTO.ConfigInfo> children;
+    private List<ConfigInfo> children;
 
     /**
      * 入参
      */
     @Data
     public static class ConfigInfo {
+
+        @ApiModelProperty(value = "安装类型 1 新安装 2 选择已有安装")
+        private Integer installType;
 
         @ApiModelProperty(value = "页面展示的名称")
         private String showName;
@@ -58,20 +60,20 @@ public class DeployAppBO implements Serializable {
         @ApiModelProperty(value = "字段定义")
         private String name;
 
+        @ApiModelProperty(value = "字段值")
+        private String value;
+
         @ApiModelProperty(value = "前端页面展示的输入框格式 input 输入框 ,radio 单选 , select下拉框 , checkbox 多选 ,textarea 文本输入框")
         private String input;
 
         @ApiModelProperty(value = "是否展示 1 展示 0 不展示")
         private Integer show;
 
-        @ApiModelProperty(value = "安装类型 0 没有该选项 1 新安装 2 选择已有的安装")
-        private Integer installType;
-
-        @ApiModelProperty(value = "配置的值分隔符号类型 1 英文逗号 2 英文井号 3 英文星号 值可空")
-        private Integer spiltType;
-
         @ApiModelProperty(value = "value对应的值是否可修改 1 可修改 2 不可修改 前端需要置灰")
         private Integer modifiable;
+
+        @ApiModelProperty(value = "配置列表")
+        private List<ConfigInfo> children;
 
         @ApiModelProperty(value = "下拉框所选择的数据")
         private List<String> list;

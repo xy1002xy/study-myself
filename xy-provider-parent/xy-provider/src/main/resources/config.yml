@@ -1,0 +1,210 @@
+# 页面展示的名称
+- showName: 数据库
+  #计划发布顺序
+  order: 1
+  #是否跳过 1 跳过 0 不跳过
+  skip: 0
+  #是否展示 1 展示 0 不展示
+  show: 1
+  #安装类型 null 没有该选项 1 新安装 2 选择已有的安装
+  currentSelect: 1
+  children:
+    #是否展示 1 展示 0 不展示
+    - show: 1
+      # 该配置对应的属性含义
+      description: 该应用安装的类型
+      # 页面展示的名称
+      showName: 新安装
+      name: installType
+      # 配置对应的具体的值
+      value: 1
+      # 前端页面展示的输入框格式 input 输入框 ,radio 单选 , select下拉框 , checkbox 多选 ,textarea 文本输入框
+      input: radio
+      #value 对应的值是否可修改 1 可修改 2 不可修改
+      modifiable: 1
+      children:
+        - show: 1
+          # 该配置对应的属性含义
+          description: 数据库安装版本
+          # 页面展示的名称
+          showName: 安装版本
+          # 目前无意义，针对后端自己配置文件，key对应的名字
+          name: dataSourceVersion
+          # 配置对应的具体的值
+          value: 达梦1.8
+          # 前端页面展示的输入框格式 input 输入框 ,radio 单选 , select下拉框 , checkbox 多选 ,textarea 文本输入框
+          input: select
+          #value 对应的值是否可修改 1 可修改 2 不可修改
+          modifiable: 1
+        - show: 1
+          # 该配置对应的属性含义
+          description: 数据库安装位置
+          # 页面展示的名称
+          showName: 安装位置
+          # 目前无意义，针对后端自己配置文件，key对应的名字
+          name: dataSourcePosition
+          # 配置对应的具体的值
+          value: selectServer
+          # 前端页面展示的输入框格式 input 输入框 ,radio 单选 , select下拉框 , checkbox 多选 ,textarea 文本输入框
+          input: select
+          #value 对应的值是否可修改 1 可修改 2 不可修改
+          modifiable: 1
+        - show: 1
+          description: 数据库用户名
+          showName: 账号
+          name: userName
+          value: 123
+          input: input
+          modifiable: 2
+        - show: 1
+          description: 数据库密码
+          showName: 密码
+          name: password
+          value: 122@
+          input: input
+          modifiable: 2
+    - show: 1
+      description: 该应用安装的类型
+      showName: 选择已有服务
+      name: installType
+      value: 2
+      input: radio
+      modifiable: 1
+      children:
+        - show: 1
+          description: 数据库url
+          showName: 链接
+          name: dataSourceUrl
+          value: '1123'
+          input: input
+          modifiable: 2
+        - show: 1
+          description: 数据库用户名
+          showName: 账号
+          name: userName
+          value: 123
+          input: input
+          modifiable: 2
+        - show: 1
+          description: 数据库密码
+          showName: 密码
+          name: password
+          value: 123456789@
+          input: input
+          modifiable: 2
+- showName: 缓存
+  order: 2
+  skip: 0
+  show: 1
+  currentSelect: 1
+  children:
+    - show: 1
+      description: 该应用安装的类型
+      showName: 新安装
+      name: installType
+      value: 1
+      input: radio
+      modifiable: 1
+      children:
+        - show: 1
+          description: 数据库安装版本
+          showName: 安装版本
+          name: cacheVersion
+          value: '4.0'
+          input: select
+          modifiable: 1
+        - show: 1
+          description: 数据库安装位置
+          showName: 安装位置
+          name: cachePosition
+          value: selectServer
+          input: select
+          modifiable: 1
+        - show: 1
+          description: 数据库
+          showName: 数据库
+          name: database
+          value: 0
+          input: input
+          modifiable: 1
+        - show: 1
+          description: 缓存密码
+          showName: 密码
+          name: password
+          value: '12!@#'
+          input: input
+          modifiable: 1
+        - show: 1
+          description: 缓存端口
+          showName: 端口
+          name: port
+          value: 6379
+          input: input
+          modifiable: 1
+    - show: 1
+      description: 该应用安装的类型
+      showName: 选择已有服务
+      name: installType
+      value: 2
+      input: radio
+      modifiable: 1
+      children:
+        - show: 1
+          description: 数据库host
+          showName: 主机host
+          name: host
+          value: 1212
+          input: input
+          modifiable: 2
+        - show: 1
+          description: 数据库
+          showName: 数据库
+          name: database
+          value: 0
+          input: input
+          modifiable: 1
+        - show: 1
+          description: 缓存密码
+          showName: 密码
+          name: password
+          value: '121!@#'
+          input: input
+          modifiable: 1
+        - show: 1
+          description: 缓存端口
+          showName: 端口
+          name: port
+          value: 6379
+          input: input
+          modifiable: 1
+- showName: 后端应用
+  order: 3
+  skip: 0
+  show: 1
+  children:
+    - show: 0
+      description: 启动jar包名称
+      showName: 应用文件名
+      name: name
+      value: 12-service.jar
+      input: input
+      modifiable: 1
+    - show: 1
+      description: 启动端口
+      showName: 端口
+      name: server.port
+      value: 8071
+      input: input
+      modifiable: 1
+    - show: 0
+      description: 服务自身的配置文件
+      name: appConfigFile
+      value: /src/main/resources/application.yml
+    - show: 0
+      description: 从汇信获取人员接口地址
+      name: huixing.getLegalPersonInfo.uri
+      value: 'http://12.21.12.66:2/v1/auth/users/getUserInfo'
+    - show: 0
+      description: appId
+      name: appId
+      value: 123
